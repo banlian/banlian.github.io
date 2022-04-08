@@ -15,10 +15,10 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- <link th:href="@{///fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"> -->
-    <link rel="stylesheet" href="https://wangminli.gitee.io/dapanyuntu/static/base.css" />
-    <link rel="stylesheet" href="https://wangminli.gitee.io/dapanyuntu/static/common.css" />
-    <link rel="stylesheet" href="https://wangminli.gitee.io/dapanyuntu/static/map.css" />
-    <link rel="stylesheet" href="https://wangminli.gitee.io/dapanyuntu/static/znty.css" type="text/css">
+    <link rel="stylesheet" href="/static/base.css" />
+    <link rel="stylesheet" href="/static/common.css" />
+    <link rel="stylesheet" href="/static/map.css" />
+    <link rel="stylesheet" href="/static/znty.css" type="text/css">
     <!--<link rel="icon" type="image/png" th:href="@{/favicon_2x.png}" sizes="32x32">-->
     <!--<link rel="icon" type="image/png" th:href="@{/favicon.png}" sizes="16x16">-->
     <style type="text/css">
@@ -50,7 +50,7 @@
 <div class="content map">
     <div class="narrow">
         <span class="currentTime"></span>
-        <a id="narrow"><img src="https://wangminli.gitee.io/dapanyuntu/static/narrow.png"/></a>
+        <a id="narrow"><img src="/static/narrow.png"/></a>
     </div>
     <div class="container is-wide"  >
         <div class="view">
@@ -64,7 +64,7 @@
             <div class="zoom pull-right"></div>
             <div class="fr enlarge">
                 <span class="currentTime"></span>
-                <a id="enlage"><img src="https://wangminli.gitee.io/dapanyuntu/static/enlarge.png"/></a>
+                <a id="enlage"><img src="/static/enlarge.png"/></a>
             </div>
         </div>
         <div class="map-scan">
@@ -126,7 +126,7 @@
                    <div>
 
                        <!--     <img id="miniProgram" src="https://cdn.jellow.site/FrF_cP3ncWHzQBCYgyENHSEXxqjy.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsuamVsbG93LmNsdWIvP3RleHQ9JUU1JThEJUIzJUU1JTg4JUJCJTIwJTQwJUU2JTlDJUJBJUU1JUEzJUIzJUU2JUI3JUI3JUU1JUFEJTkwJmhlaWdodD0yMQ==/gravity/SouthEast/dx/10/dy/10" alt="小程序" width="130px">
-                       <img id="donate" src="https://wangminli.gitee.io/dapanyuntu/static/xuming.png" alt="捐赠" width="130px" hidden>-->
+                       <img id="donate" src="/static/xuming.png" alt="捐赠" width="130px" hidden>-->
                     </div> 
                     <div>
                     </div>
@@ -153,20 +153,20 @@
     </div>
 </div>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.1.min.js"></script>
-<!--<script src="https://wangminli.gitee.io/dapanyuntu/static/d3-json.js"></script>
+<!--<script src="/static/d3-json.js"></script>
 -->
 <script src="https://cdn.staticfile.org/d3/3.4.11/d3.js"></script>
-<script src="https://wangminli.gitee.io/dapanyuntu/static/com.js"></script>
-<script src="https://wangminli.gitee.io/dapanyuntu/static/react-with-addons.min.js"></script>
-<script src="https://wangminli.gitee.io/dapanyuntu/static/d3.js"></script>
-<script src="https://wangminli.gitee.io/dapanyuntu/static/hammer.min.js"></script>
-<script src="https://wangminli.gitee.io/dapanyuntu/static/map.bundle.4eastMoney.js"></script>
-<!--<script src="https://wangminli.gitee.io/dapanyuntu/static/map.bundle.js"></script> -->
-<!--<script src="https://wangminli.gitee.io/dapanyuntu/static/map.js"></script>-->
+<script src="/static/com.js"></script>
+<script src="/static/react-with-addons.min.js"></script>
+<script src="/static/d3.js"></script>
+<script src="/static/hammer.min.js"></script>
+<script src="/static/map.bundle.4eastMoney.js"></script>
+<!--<script src="/static/map.bundle.js"></script> -->
+<!--<script src="/static/map.js"></script>-->
 <script>
-    document.write('<script src="https://wangminli.gitee.io/dapanyuntu/static/map.js?v='+new Date().getMonth() + '"><\/script>')
+    document.write('<script src="/static/map.js?v='+new Date().getMonth() + '"><\/script>')
 </script>
-<script src="https://wangminli.gitee.io/dapanyuntu/static/random.js"></script>
+<script src="/static/random.js"></script>
 <script type="text/javascript">
     function OnResize(){}window.onresize=OnResize;OnResize();
     var aphorism = msg[Math.floor(Math.random() * msg.length)]
