@@ -1,103 +1,185 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            font-family: 'Times New Roman', Times, serif;
-        }
-
-        /* Style the tab */
-        .tab {
-            overflow: hidden;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
-        }
-
-        /* Style the buttons inside the tab */
-        .tab button {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 17px;
-        }
-
-        /* Change background color of buttons on hover */
-        .tab button:hover {
-            background-color: #ddd;
-        }
-
-        /* Create an active/current tablink class */
-        .tab button.active {
-            background-color: rgb(21, 235, 32);
-        }
-
-        /* Style the tab content */
-        .tabcontent {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            display: none;
-            padding: 6px 12px;
-            border: 1px solid #ccc;
-            border-top: none;
-        }
-
-
-        .headertekst {
-            text-align: center;
-        }
+    <title>大盘云图 -大盘走势，尽在掌握!</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=10">
+    <meta name="viewport" content="width=1024"><meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="imagetoolbar" content="no">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Refresh" content="3600">
+    <!--这行代码会以https的形式访问静态资源 —— 2021-03-18-->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- <link th:href="@{///fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"> -->
+    <link rel="stylesheet" href="https://wangminli.gitee.io/dapanyuntu/static/base.css" />
+    <link rel="stylesheet" href="https://wangminli.gitee.io/dapanyuntu/static/common.css" />
+    <link rel="stylesheet" href="https://wangminli.gitee.io/dapanyuntu/static/map.css" />
+    <link rel="stylesheet" href="https://wangminli.gitee.io/dapanyuntu/static/znty.css" type="text/css">
+    <!--<link rel="icon" type="image/png" th:href="@{/favicon_2x.png}" sizes="32x32">-->
+    <!--<link rel="icon" type="image/png" th:href="@{/favicon.png}" sizes="16x16">-->
+    <style type="text/css">
+        #tb_header{display: none;}
+        .content{width: 100%;}
+        /* .container.is-wide{width:1915px}*/
+        .content.map .view{padding-left: 0;height: 50px;background:#383b44;padding: 7px 0 13px 0;}
+        .content.map .view .view-select{width: 387px;border-right:none;margin-left: 16px;}
+        .content.map .view .map_nav_a{font-size: 16px;line-height: 45px;display: inline-block;width: 112px;height: 45px;text-align: center;padding:0;color: #fefefe;background: #535663;border-radius: 3px;}
+        .content.map .view .map_nav_a.is-active{font-weight: 400;background: #ee5752;}
+        .pull-right{display: none;}
+        .tips{font-size: 12px;}
     </style>
-</head>
-
-
-<body>
-    <h2 class="headertekst">BANLIAN</h2>
-
-    <div class="tab">
-        <button class="tablinks" onclick="opentab(event, 'INTRO')">INTRODUCTION</button>
-        <button class="tablinks" onclick="opentab(event, 'SDK')">AUTOMATION FRAMEWORK SDK</button>
-        <button class="tablinks" onclick="opentab(event, 'MISC')">OTHERS</button>
-    </div>
-
-    <div id="INTRO" class="tabcontent">
-        <h3>WELCOM</h3>
-        <p></p>
-    </div>
-
-    <div id="SDK" class="tabcontent">
-        <h3>AUTOMATION FRAMEWORK SDK</h3>
-        <h4>Turtorials</h4>
-        <p></p>
-    </div>
-
-    <div id="MISC" class="tabcontent">
-        <h3>OTHERS</h3>
-        <p>misc</p>
-    </div>
-
+    <script type="text/javascript">FinvizSettings = {hasUserPremium: false, name: ""};</script>
+    <!--百度统计功能——2021-03-25-->
     <script>
-        function opentab(evt, categoryName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(categoryName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?b329e00bb57179790a983f65af2da4a4";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
     </script>
 
-</body>
+</head>
+<body class="has-map" style="margin:0" bgcolor="#ffffff">
 
+<div class="content map">
+    <div class="narrow">
+        <span class="currentTime"></span>
+        <a id="narrow"><img src="https://wangminli.gitee.io/dapanyuntu/static/narrow.png"/></a>
+    </div>
+    <div class="container is-wide"  >
+        <div class="view">
+            <div class="pull-left view-select" style="width:440px">
+                <h1 style="color:white; font-size:31px; display: inline;">大盘云图</h1>
+                <h2 style="text-transform:lowercase; font-size:15px;display: inline;">
+                     <a href="index.html" style="font-size:18px;display: inline;">盯盘必备 - www.dapanyuntu.com</a> 
+                    <!--<i>网站迁移中，出现网络抖动可刷新解决，见谅！</i>-->
+                </h2>
+            </div>
+            <div class="zoom pull-right"></div>
+            <div class="fr enlarge">
+                <span class="currentTime"></span>
+                <a id="enlage"><img src="https://wangminli.gitee.io/dapanyuntu/static/enlarge.png"/></a>
+            </div>
+        </div>
+        <div class="map-scan">
+            <div class="sidebar sidebar2">
+                <div class="">
+                    <ul class="left_nav">
+                        <li class="active"><a>全部A股</a></li>
+                        <li hidden><a>上证A股</a></li>
+                        <li hidden><a>深证A股</a></li>
+                        <li><a>科创板</a></li>
+                        <li hidden><a>北交所</a></li>
+                        <li hidden><a>上交所主板</a></li>
+                        <li hidden><a>深交所主板</a></li>
+                        <!-- <li><a>中小板</a></li> -->
+                        <li hidden><a>创业板</a></li>
+                    </ul>
+                    <select id="select-change" style="visibility: visible;"  hidden>
+                        <option value="mkt_idx.cur_chng_pct" selected="selected" color="">涨跌幅</option>
+                        <option value="mkt_idx.chng_pct_week" color="_5">近1周涨跌幅</option>
+                        <option value="perf_idx.chng_pct_month" color="_10">近1月涨跌幅</option>
+                        <option value="perf_idx.chng_pct_3month" color="_15">近3月涨跌幅</option>
+                        <option value="perf_idx.chng_pct_6month" color="_20">近6月涨跌幅</option>
+                        <option value="perf_idx.chng_pct_year" color="_25">近1年涨跌幅</option>
+                        <option value="perf_idx.chng_pct_year_sofar" color="_25">今年以来涨跌幅</option>
+                        <option value="mkt_idx.rela_volume" color="_relvol">相对成交量</option>
+                        <option value="mkt_idx.peg" color="_peg">PEG</option>
+                        <option value="mkt_idx.ps" color="_ps">市销率</option>
+                        <option value="mkt_idx.pb" color="_pb">市净率</option>
+                        <option value="mkt_idx.div_rate" color="_div">股息率</option>
+                        <option value="mkt_idx.pe_ttm" color="_pe">市盈率(TTM)</option>
+                        <option value="mkt_idx.fir_fcst_pe" color="_fpe">预测市盈率</option>
+                        <option value="fin_idx.eps_5year" color="_eps5y">EPS增长率(过去5年)</option>
+                        <option value="act_date" color="_earndate">业绩公布日</option>
+                    </select>
+                </div>
+                <div class="search">
+                    <!--在map.bundle.js中函数93:渲染-->
+                </div>
+            </div>
+            <div class="sidebar3" style="width: 160px !important;height: 96px;/*! background: #3f414b; */padding: 15px 13px 0 17px;display: inline-block;position: absolute;top: 160px;left: 10px;color: #fefefe;">
+                    <div class="tips"><b>温馨提示：</b></div>
+                    <div class="tips">· 面积代表公司市值</div>
+                    <div class="tips">· 颜色代表涨跌幅度</div>
+                    <div class="tips">· 每10秒更新数据</div>
+                    <div class="tips">· 支持滚动拖动鼠标</div>
+                    <div class="tips">· 双击色块查看K线</div>
+                    <hr>
+                    <div class="tips">
+                    <a href="https://finviz.com/map.ashx" target="_blank">
+                        <font color="#00ff00"><b><u>· 美股大盘云图!</u></b></font>
+                    </a>
+                    </div>
+                    <div class="tips">
+                        <a href="https://docs.qq.com/form/page/DWG9rSUd3dW9WY09V?_w_tencentdocx_form=1#/fill" target="_blank">
+                            <font color="#FF0000"><b><u>· 我要吐槽~</u></b></font>
+                        </a>
+                    </div>
+                   
+                   <div>
+
+                       <!--     <img id="miniProgram" src="https://cdn.jellow.site/FrF_cP3ncWHzQBCYgyENHSEXxqjy.jpg?imageMogr2/auto-orient%7Cwatermark/3/image/aHR0cHM6Ly93YXRlcm1hcmsuamVsbG93LmNsdWIvP3RleHQ9JUU1JThEJUIzJUU1JTg4JUJCJTIwJTQwJUU2JTlDJUJBJUU1JUEzJUIzJUU2JUI3JUI3JUU1JUFEJTkwJmhlaWdodD0yMQ==/gravity/SouthEast/dx/10/dy/10" alt="小程序" width="130px">
+                       <img id="donate" src="https://wangminli.gitee.io/dapanyuntu/static/xuming.png" alt="捐赠" width="130px" hidden>-->
+                    </div> 
+                    <div>
+                    </div>
+            </div>
+            <div class="content-view-map">
+                <div id="map" class="">
+                    <!--<div id="mask">
+                        <div>
+                            <img src="">
+                            <span>正在加载</span>
+                        </div>
+                    </div>-->
+                    <div id="body"></div>
+                    <div id="legend"></div>
+                    <div id="hover-wrapper"></div>
+                </div>
+                <div class="map_bt clearfix map_bt_min">
+                    <div class="map_scale map_scale_min"></div>
+                    <font color="white"><span id="random_aphorism"></span></font>
+                </div>
+            </div>
+        </div>
+        <div id="modal"></div>
+    </div>
+</div>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.1.min.js"></script>
+<!--<script src="https://wangminli.gitee.io/dapanyuntu/static/d3-json.js"></script>
+-->
+<script src="https://cdn.staticfile.org/d3/3.4.11/d3.js"></script>
+<script src="https://wangminli.gitee.io/dapanyuntu/static/com.js"></script>
+<script src="https://wangminli.gitee.io/dapanyuntu/static/react-with-addons.min.js"></script>
+<script src="https://wangminli.gitee.io/dapanyuntu/static/d3.js"></script>
+<script src="https://wangminli.gitee.io/dapanyuntu/static/hammer.min.js"></script>
+<script src="https://wangminli.gitee.io/dapanyuntu/static/map.bundle.4eastMoney.js"></script>
+<!--<script src="https://wangminli.gitee.io/dapanyuntu/static/map.bundle.js"></script> -->
+<!--<script src="https://wangminli.gitee.io/dapanyuntu/static/map.js"></script>-->
+<script>
+    document.write('<script src="https://wangminli.gitee.io/dapanyuntu/static/map.js?v='+new Date().getMonth() + '"><\/script>')
+</script>
+<script src="https://wangminli.gitee.io/dapanyuntu/static/random.js"></script>
+<script type="text/javascript">
+    function OnResize(){}window.onresize=OnResize;OnResize();
+    var aphorism = msg[Math.floor(Math.random() * msg.length)]
+    $("#random_aphorism").html(aphorism);
+    
+    $("#miniProgram").click(function(){
+        $("#miniProgram").hide();
+        $("#donate").show();
+    })
+     $("#donate").click(function(){
+        $("#donate").hide();
+        $("#miniProgram").show();
+    })
+</script>
+</body>
 </html>
