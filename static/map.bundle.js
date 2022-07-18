@@ -1045,8 +1045,7 @@
         }
 
         function c(e, t, c, n) {
-            // var d = a(t);
-            //取消devicePixelRatio对canvas的相应的设置
+
             var d = 1;
             return 1 !== d && (e.width = c * d,
                 e.height = n * d,
@@ -1325,15 +1324,12 @@
                     })
             },
             zoom: function (e, t, a) {
-                //console.log("放大或缩小...")
                 if (void 0 === t && (t = o.getCenter().x,
                     a = o.getCenter().y),
                 e > 0) {
-                    //console.log("getNextZoomLevel...")
                     var d = o.getNextZoomLevel();
                     d !== o.getScale() && c(d, t, a)
                 } else {
-                    //console.log("getPreviousZoomLevel...")
                     var d = o.getPreviousZoomLevel();
                     d !== o.getScale() && n(d, t, a)
                 }
@@ -1354,16 +1350,10 @@
             },
             updateData: function (isFirst) {
                 var ignoreAuth = window.ignoreAuth;
-                var result = judgeWorkTime();
-
                 if (!isFirst && window.pollingChanged) {
                     window.pollingChanged = false;
                     return;
                 }
-                if ((isFirst == undefined || !isFirst) && !result) {
-                    return;
-                }
-
                 var condition = $('#select-change').val();
                 var innerCode = window.tmpCode;
                 var url = "http://www.z3quant.com/dbus/timedQueryMap.shtml?condition=" + condition + "&innerCode=" + innerCode;
@@ -1372,61 +1362,48 @@
                     url = "http://www.z3quant.com/dbus/timedQueryMapForValidate.shtml?isContinue=1";
                 }
                 url += "&" + new Date().getTime();
-                
-                var queryUrl = "http://www.z3quant.com/openapi/timedQueryMap.shtml?isContinue=1&" + "&" + "condition=" + condition + "&" + new Date().getTime();
-                if(innerCode == "bjs"){
-                    queryUrl = "http://30.push2.eastmoney.com/api/qt/clist/get?pn=1&pz=300&po=1&np=1&fltt=2&invt=2&fs=m:0+t:81+s:2048&fields=f14,f3"
-                }
-                l.abort(),
-                    l = $.ajax({
-                        type: "get",
-                        dataType: "json",
-                        scriptCharset: "utf-8",
-                        url: queryUrl,
-                        data: "",
-                        success: function (t) {
-                             var nodes = {};
-                             var bjsNode = {};
-                            if(innerCode  == "" || innerCode != "bjs"){
-                                if (t.errCode !== 0 || !t.data) {
-                                    return;
-                                }
-                                nodes = t.data;
-                            }else if(innerCode == "bjs"){
-                                var bjsData = t.data.diff
-                                var arrIndex ;
-                                for(arrIndex in bjsData){
-                                    nodes[bjsData[arrIndex].f14] = bjsData[arrIndex].f3
-                                }
-                            }
-                            var additional = {};
-                            var now = new Date();
-                            $.each(nodes, function (prop, val) {
+                var eastMoneyUrl = "http://98.push2.eastmoney.com/api/qt/clist/get?pn=1&pz=6000&po=1&np=1&ut=bd1d9ddb04089700cf9c27f6f7426281&fltt=2&invt=2&fid=f3&fs=m:0+t:6,m:0+t:13,m:0+t:80,m:1+t:2,m:1+t:23&fields=f3,f12,f13,f14&_=1582007856998";
+                l.abort(), l = $.ajax({
+                    type: "get",
+                    dataType: "json",
+                    scriptCharset: "utf-8",
+                    url: eastMoneyUrl,
+                    data: "",
+                    success: function(t) {
+                        var nodes = t.data;
+                        var stockList = t.data.diff;
+                        var stocks = {};
+                        for(var idx = 0; idx < stockList.length; idx++){
 
-                                if (condition === "act_date") {
-                                    if (nodes[prop] != null && nodes[prop] !== "") {
-                                        var date = new Date(nodes[prop]);
-                                        additional[prop] = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-                                        nodes[prop] = date > now ? -1 : 1;
-                                    } else {
-                                        additional[prop] = "--";
-                                        nodes[prop] = null;
-                                    }
-                                } else {
-                                    var val = parseFloat(val);
-                                    nodes[prop] = isNaN(val) ? null : parseFloat(val);
-                                }
-                            });
-                            var data = {
-                                additional: additional,
-                                nodes: nodes
-                            };
-                            i.handleServerAction({
-                                type: r.UPDATE_DATA,
-                                data: data
-                            })
+                            var key = stockList[idx].f14.replace(/\s/g,"")
+                            stocks[key] = stockList[idx].f3
                         }
-                    })
+
+                        var additional = {};
+                        var now = new Date();
+                        $.each(stocks, function(prop, val) {
+                            console.log(condition)
+                            if (condition === "act_date") {
+                                if (nodes[prop] != null && nodes[prop] !== "") {
+                                    var date = new Date(nodes[prop]);
+                                    additional[prop] = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                                    nodes[prop] = date > now ? -1 : 1;
+                                } else {
+                                    additional[prop] = "--";
+                                    nodes[prop] = null;
+                                }
+                            } else {
+                                var val = parseFloat(val);
+                                nodes[prop] = isNaN(val) ? null : parseFloat(val);
+                            }
+                        });
+                        var data = { additional: additional, nodes: nodes };
+                        i.handleServerAction({
+                            type: r.UPDATE_DATA,
+                            data: data
+                        })
+                    }
+                })
             },
             publishMap: function (e) {
                 i.handleViewAction({
@@ -1940,7 +1917,6 @@
                             (e.children || []).forEach(function (e) {
                                 l.industries.push(e),
                                     (e.children || []).forEach(function (e) {
-                                        // e.dx < 1 || e.dy < 1 || l.nodes.push(e)
                                         l.nodes.push(e)
                                     })
                             })
@@ -2070,13 +2046,11 @@
                     var a = e.dx - 1
                         , c = e.dy - 1;
                     e.nameFontSize = this.findIdealFontSize(e.dx - 1, e.name, t);
-                    //如果是chrome則最小字體是1px，計算時最小只能按1px計算——这样可以使放大时显示更多的文字
                     if (navigator.userAgent.indexOf('Chrome') > -1) {
                         e.nameFontSize = Math.max(e.nameFontSize, 1);
                     }
                     e.w = this.getTextWidth(e.nameFontSize, e.name);
                     var n = (a * t - e.w * t >= 2 * i.fontSizePadding[e.nameFontSize] ? 1 : 0) && (c * t - e.nameFontSize * t > 1 ? 1 : 0);
-                    // var n = 1;
                     if (e.nameOpacity = 1 === n ? "block" : "none",
                     "block" === e.nameOpacity) {
                         e.perfFontSize = Math.max(this.findIdealFontSize(e.dx - 1, e.name, t) - 6, i.scaleFontSizes[t][i.scaleFontSizes[t].length - 1]),
@@ -2515,7 +2489,7 @@
                 React.render(React.createElement(s, null), document.getElementById("modal")));
             var v = (Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
                     c.w = b)
-                , // g = c.h = ~~(v / 1.8);
+                ,
                 g = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
             g = g - 10;
 
@@ -2528,7 +2502,6 @@
                 }
             } catch (e) {
             }
-            // var M = FinvizSettings.hasUserPremium ? 20 : 120;
             var M = 10;
             if (window.updatePollingPid) {
                 clearInterval(window.updatePollingPid);
@@ -3083,7 +3056,6 @@
                 }
             },
             componentDidMount: function () {
-                //console.log("componentDidMount")
                 c.addChangeListener(this._onChange),
                 c.isInitialized() && this._initialize();
                 var e = new Hammer(this.refs.hoverCanvas.getDOMNode());
@@ -3108,12 +3080,10 @@
                 var e = c.getTreemap()
                     , t = e ? e.w : 1
                     , a = e ? e.h : 1;
-                //解决不全屏有滚动条的问题，2处修改
                 if (!$(".narrow").is(":visible")) {
                     a -= 110
                 }
-                // var A = document.getElementById("body");
-                // A.style.width = t + "px", A.style.height = a + "px";
+
                 return React.createElement("div", null, React.createElement("div", null, React.createElement("canvas", {
                     ref: "canvas",
                     className: "chart",
@@ -3164,7 +3134,6 @@
                     e.restore()
             },
             _onChange: function () {
-                //console.log("鼠标在行业间切换的时候也会调用该方法111")
 
                 var e = this;
                 this.setState({
@@ -3242,17 +3211,14 @@
                             })
                         });
                         var s = "t=" + u.substring(1)
-                        //console.log("s = " + s)
                     } else
                         var f = b.name.replace(/[^a-zA-Z]/g, "").toLowerCase()
                             , s = "f=sec_" + f;
-                    //console.log("s = " + s)
 
                     return;
                 }
             },
             _onWheel: function (e) {
-                //console.log("鼠标滚动的时候会调用，但是期间移动鼠标也会调用....")
                 e.preventDefault();
                 var t = o(e)
                     , a = t.offsetX
@@ -3264,7 +3230,6 @@
                     this.lastPanY = e.pointers[0].clientY
             },
             _onPanMove: function (e) {
-                //console.log("_onPanMove....")
                 var t = this.lastPanX - e.pointers[0].clientX
                     , a = this.lastPanY - e.pointers[0].clientY;
                 this.lastPanX = e.pointers[0].clientX,
@@ -3275,7 +3240,6 @@
                 n.changeTranslate(i, r)
             },
             _onPinch: function (e) {
-                //console.log("pinch....")
                 var t = e.pointers[0].clientX - e.target.offsetLeft - e.target.offsetParent.offsetLeft
                     , a = e.pointers[0].clientY - e.target.offsetTop - e.target.offsetParent.offsetTop
                     , c = e.pointers[1].clientX - e.target.offsetLeft - e.target.offsetParent.offsetLeft
@@ -3286,7 +3250,6 @@
                 n.zoom(o, i, r)
             },
             _initialize: function () {
-                //console.log("_initialize....刷新加载的时候会调用")
                 var e = this;
                 if (!this.state.initialized) {
                     var t = c.getTreemap()
@@ -3427,7 +3390,7 @@
                         l = s.y + s.dy / 2 + 1,
                     "block" === s.perfOpacity && (l -= .5 * s.nameFontSize),
                         e.font = "normal " + s.nameFontSize + "px Microsoft YaHei",
-                        e.fillText(s.name, f, l));
+                        null);
                 for (e.fillStyle = "rgba(255, 255, 255, 1)",
                          o = 0; o < u; o++)
                     s = t.nodes[o],
@@ -3442,7 +3405,7 @@
                     "block" === s.perfOpacity && (f = s.x + s.dx / 2 + 1,
                         l = s.y + s.dy / 2 + 1 + .5 * s.nameFontSize,
                         e.font = "normal " + s.perfFontSize + "px Microsoft YaHei",
-                        e.fillText(s.perfText, f, l));
+                        null);
                 for (e.fillStyle = "rgba(255, 255, 255, 1)",
                          o = 0; o < u; o++)
                     s = t.nodes[o],
@@ -3550,19 +3513,16 @@
                 }
             },
             componentDidMount: function () {
-                //console.log("第一次加载时会调用到该方法")
 
                 c.addChangeListener(this._onChange),
                     document.addEventListener("mousemove", this._onMouseMove)
             },
             componentWillUnmount: function () {
-                //console.log("111111111111")
 
                 c.removeChangeListener(this._onChange),
                     document.removeEventListener("mousemove", this._onMouseMove)
             },
             _onChange: function () {
-                //console.log("鼠标在行业间切换的时候也会调用该方法")
                 this.setState({
                     shown: !!c.getHoveredNode(),
                     sparklinesData: c.getSparklines()
@@ -3574,6 +3534,7 @@
                 if (!this.state.shown)
                     return null;
                 var stockCode = (t.id).substr(0, t.id.indexOf("."));
+                var upOrDown = t.perf >0 ? 0 : 1;
                 var prefix = (t.id).substr(t.id.indexOf(".") + 1).toLowerCase();
                 var a = this.state.sparklinesData && this.state.sparklinesData[t.name]
                     ,
@@ -3585,6 +3546,7 @@
                     })
                     , f = s.length > 15
                     , l = ("geo" !== o ? t.parent.parent.name + " - " : "") + t.parent.name;
+
                 return React.createElement("div", {
                     id: "hover"
                 }, React.createElement("h3", null, l), React.createElement("table", {
@@ -3603,7 +3565,8 @@
                     width: 98
                 }, t.name), React.createElement("td", null, React.createElement("img", {
                     className: "smallLine",
-                    src: "http://chart.jrjimg.cn/pngdata/minpic/pic40/" + stockCode + ".png"
+                    src: "http://webquotepic.eastmoney.com/GetPic.aspx?nid="+upOrDown+"."+stockCode+"&imageType=RJY"//"http://chart.jrjimg.cn/pngdata/minpic/pic40/" + stockCode + ".png"
+
                 })), React.createElement("td", {
                     className: "change"
                 }, i(t))), React.createElement("tr", {
@@ -3625,7 +3588,6 @@
                     key: t.name + "-hover-description",
                     className: "hovered is-description",
                     style: {
-                        //backgroundColor: r(t.perf),
                         height: 16
                     }
                 }, React.createElement("td", {
@@ -3637,6 +3599,7 @@
                     var c = e.state.sparklinesData && e.state.sparklinesData[t.name]
                         , d = c ? e.state.sparklinesData[t.name] : [];
                     var listStockCode = (t.id).substr(0, t.id.indexOf("."));
+                    var upOrDown = t.perf >0 ? 0 : 1;
                     return React.createElement("tr", {
                         key: t.name
                     }, React.createElement("td", {
@@ -3645,18 +3608,18 @@
                         className: "smallticker"
                     }, t.name), React.createElement("td", null, React.createElement("img", {
                         className: "smallLine",
-                        src: "http://chart.jrjimg.cn/pngdata/minpic/pic40/" + listStockCode + ".png"
+                        width:60,
+                        src: "http://webquotepic.eastmoney.com/GetPic.aspx?nid="+upOrDown+"."+listStockCode+"&imageType=RJY"//"http://chart.jrjimg.cn/pngdata/minpic/pic40/" + stockCode + ".png"
                     })), React.createElement("td", {
                         className: "change",
                         style: {
-                            fontWeight: 400,
+                            fontWeight: 800,
                             color: r(t.perf)
                         }
                     }, i(t)))
                 }))))
             },
             _onMouseMove: function (e) {
-                //console.log("鼠标在行业间切换的时候也会调用该方法")
                 if (this.state.shown) {
                     var t = 100
                         , a = document.getElementById("hover")
@@ -3664,7 +3627,6 @@
                         , n = a.scrollHeight
                         , d = document.documentElement.clientWidth
                         , i = document.documentElement.clientHeight;
-                    //console.log("a = "+ a)
                     e.clientX + c + 1.5 * t < d ? a.style.left = e.clientX + t + "px" : e.clientX - c - t > 0 ? a.style.left = e.clientX - t - c + "px" : (t = 20,
                         e.clientX + c + t < d ? a.style.left = e.clientX + t + "px" : a.style.left = e.clientX - t - c + "px"),
                         a.style.top = Math.max(0, e.clientY + 0 - Math.max(0, e.clientY + 0 + n - i)) + "px"
@@ -3689,7 +3651,6 @@
                 }
             },
             _filterStocks: function (e, t) {
-                //if(t == ''){}else{
                 return e = e.slice(),
                     e = e.filter(function (e) {
                         return 0 === e.id.indexOf(t) || 0 === e.name.toUpperCase().indexOf(t) || (e.chiSpel != null && 0 === e.chiSpel.indexOf(t.toUpperCase()))
@@ -3698,7 +3659,6 @@
                         return e.id == t.id ? 0 : e.id < t.id ? -1 : 1
                     }),
                     e
-                //}
             },
             _onChange: function (e, t) {
                 var t = e.target.value;
@@ -3987,7 +3947,6 @@
                         id: "share-map",
                         style: {
                             paddingRight: 16,
-                            //display:'none'
                         }
                     }, React.createElement("span", {
                         className: "icon is-export"
@@ -4006,13 +3965,11 @@
                     }))
                 },
                 _onMinusClick: function (e) {
-                    //console.log("_onMinusClick");
-                    //return;
+
                     e.preventDefault(),
                         c.zoom(-1)
                 },
                 _onPlusClick: function (e) {
-                    //return;
                     e.preventDefault(),
                         c.zoom(1)
                 }

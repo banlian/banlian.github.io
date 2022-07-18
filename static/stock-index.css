@@ -1,0 +1,39 @@
+@charset "UTF-8";
+.animHide{opacity: 0;}
+.animHide1{opacity: 1;transition: all 200ms linear;-webkit-transition: all 200ms linear;}
+/*在线咨询浮窗start*/
+/* ————— 第1通栏 start ————— */
+.column1{display:inline-block; padding-left: 10%;/* width: 700px;float: right;*/}
+.column1List{padding: 0 0 0 0;overflow: hidden;display:inline-block; float: right}
+.column1List dd{display:inline-block;float: left;box-sizing: border-box;-webkit-box-sizing: border-box;position: relative;width: 70px; box-sizing: border-box;-webkit-box-sizing: border-box;margin:0 auto;}
+.column1List dd::before{width: 0px;height: 20px;display: block;content: '';background-color: #e6e6e6;position: absolute;right: 0;top: 0px;display:inline-block;}
+.column1List dd:last-child::before{display: none;}
+/* .column1List dd:nth-child(1){padding-left: 70px;width: 23%;}
+.column1List dd:nth-child(2){padding-left: 90px;width: 28%;}
+.column1List dd:nth-child(3){padding-left: 90px;width: 26%;}
+.column1List dd:nth-child(4){padding-left: 100px;width: 23%;} */
+.column1List dd .title{height: 20px;line-height: 10px;font-size: 12px;color: #f3f3f3;margin:0 auto;text-align:center;}
+.column1List dd .number1{height: 15px;line-height: 2px;font-size: 12px;color: #e60012;font-weight: bold;text-align:center;}
+/*添加红绿颜色，并去掉上下箭头*/
+.column1List dd .number1 span{/*background: url(https://img.pddpic.com/mms-material-img/2022-04-11/9b910db6-eb00-4447-ba4e-1bc9cc6a77d9.png) no-repeat center right; padding-right: 25px;*/background-size: contain;text-align:center;}
+.column1List dd .number1 span.hover{/*background-image: url(https://img.pddpic.com/mms-material-img/2022-04-11/0d8734a2-2405-4552-a2ab-e99c7395e0b8.png);*/color: #008e31;text-align:center;margin:0 auto;}
+
+.column1List dd .number2{height: 10px;line-height: 0px;font-size: 12px;color: #e60012;font-weight: bold;text-align:center;margin:0 auto;}
+.column1List dd .number2 .zdf1.hover{color: #008e31;padding: 0px 0px 0px 0px}
+.column1List dd .number2 .zdf2.hover{color: #008e31;}
+.column1List dd .number2 .zdf3.hover{color: #008e31;}
+.column1List dd .number2 .zdf4.hover{color: #008e31;}
+.column1List dd .number2 .zdf5.hover{color: #008e31;}
+.column1List dd .number2 .zdf6.hover{color: #008e31;}
+.column1List dd .number2 .zdf7.hover{color: #008e31;}
+.column1List dd .number2 .zdbfb1.hover{color: #008e31;}
+.column1List dd .number2 .zdbfb2.hover{color: #008e31;}
+.column1List dd .number2 .zdbfb3.hover{color: #008e31;}
+.column1List dd .number2 .zdbfb4.hover{color: #008e31;}
+.column1List dd .number2 .zdbfb5.hover{color: #008e31;}
+.column1List dd .number2 .zdbfb6.hover{color: #008e31;}
+.column1List dd .number2 .zdbfb7.hover{color: #008e31;}
+.zdf{margin-right: 1px;}
+/* ————— 第1通栏 end ————— */
+/* ========== 首页 end ========== */
+/*公共部分 start*/
